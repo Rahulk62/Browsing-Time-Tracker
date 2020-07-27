@@ -1,0 +1,9 @@
+https://www.facebook.com/
+email
+<your facebook username>
+pass
+<your facebook password>
+loginbutton
+https://www.youtube.com/feed/trending
+http://stackoverflow.com/
+https://www.instagram.com/?hl=en
