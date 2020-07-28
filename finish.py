@@ -79,12 +79,11 @@ def delete_cookies(driver, domains=None):
                 driver.add_cookie(cookie)
     else:
         driver.delete_all_cookies()
+
 def all_fav_sites(chrome):
 	# Initial load of the domain that we want to save cookies for
 	chrome.maximize_window()
 	meta_data = readconfig( )
-	for i in range(len(meta_data)):
-		print(i,meta_data[i])
 	chrome.get(meta_data[0]) #here it will find the url in webserver
 	username=chrome.find_element_by_id(meta_data[1]) #search id for username input box
 	username.send_keys(meta_data[2]) # fill it with that
@@ -93,6 +92,7 @@ def all_fav_sites(chrome):
 	signInButton = chrome.find_element_by_id(meta_data[5]) 
 	signInButton.click()
 	time.sleep(3)
+	
 	site1 = "(window.open('"+meta_data[6]+"'))"
 	print(site1)
 	chrome.execute_script(site1)
@@ -105,15 +105,19 @@ def all_fav_sites(chrome):
 	time.sleep(3)
 	load_cookies(chrome, cookies_location)
 	
+	
 
 def end_session(driver):
 	save_cookies(driver,cookies_location)
 	tabs = len(driver.window_handles)
 	print("number of windows "+str(tabs))
 	driver.close()
-	for i in range(tabs-1):
-		driver.switch_to.window(driver.window_handles[-1])
-		driver.close()
+	try:
+		for i in range(tabs-1):
+			driver.switch_to.window(driver.window_handles[-1])
+			driver.close()
+	except:
+		pass
 
 def last_warning( ):
 	reply = ''
@@ -152,4 +156,4 @@ try :
 	end_session(chrome)
 	pprint.pprint(chrome.get_cookies())
 except Exception as e:
-	print("Can't close the web-browser"+str(e))
+	print("Exception Caught "+str(e))
